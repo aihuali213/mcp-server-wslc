@@ -1,0 +1,54 @@
+{
+  "name": "mcp-server-wslc",
+  "version": "1.0.0",
+  "description": "MCP server for WSL container management via wslc CLI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-server-wslc": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "modelcontextprotocol",
+    "wsl",
+    "wsl2",
+    "wslc",
+    "container",
+    "docker"
+  ],
+  "author": "aihuali213",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aihuali213/mcp-server-wslc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aihuali213/mcp-server-wslc/issues"
+  },
+  "homepage": "https://github.com/aihuali213/mcp-server-wslc#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
+  }
+}
