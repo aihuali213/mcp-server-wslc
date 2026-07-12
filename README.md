@@ -227,17 +227,6 @@ mcp-server-wslc/
 ├── README.md
 └── README.zh-CN.md
 ```
-
----
-
-## Architecture
-
-- **One tool per file** — scales to 50+ tools without monoliths
-- **Central registry** — `registry/registerTools.ts` imports every tool; `server.ts` never knows individual tools
-- **Single execution wrapper** — `utils/wslc.ts` is the only file allowed to call `wslc`; all tools route through `runWslc()`
-- **Strict TypeScript** — no `any`, strict mode, zod schemas for every parameter
-- **Stdio transport** — maximum client compatibility
-
 ---
 
 ## Testing
@@ -252,25 +241,7 @@ npm run test           # Single run
 npm run test:watch     # Watch mode
 npm run test:coverage  # Coverage report (v8)
 ```
-
-## Troubleshooting
-
-```bash
-# Verify compilation
-npm run check
-
-# Verify server starts
-timeout 2 node dist/index.js
-# Expected: mcp-server-wslc v1.0.0 started (stdio)
-
-# Verify wslc is available
-which wslc && wslc version
-
-# Manual tool test
-node -e "
-import('@modelcontextprotocol/sdk/server/mcp.js').then(() => console.log('SDK OK'));
-"
-```
+---
 
 ## License
 

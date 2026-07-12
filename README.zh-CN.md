@@ -230,16 +230,6 @@ mcp-server-wslc/
 
 ---
 
-## 架构
-
-- **一个工具一个文件** —— 扩展到 50+ 工具也不会形成巨石文件
-- **中心化注册** —— `registry/registerTools.ts` 导入所有工具；`server.ts` 无需感知具体工具
-- **统一执行封装** —— `utils/wslc.ts` 是唯一允许调用 `wslc` 的文件；所有工具均通过 `runWslc()` 路由
-- **严格 TypeScript** —— 禁止 `any`，strict 模式，每个参数都有 zod schema
-- **Stdio 传输** —— 最大客户端兼容性
-
----
-
 ## 测试
 
 单元测试使用 [vitest](https://vitest.dev)。测试覆盖：
@@ -252,26 +242,7 @@ npm run test           # 单次运行
 npm run test:watch     # 监视模式
 npm run test:coverage  # 覆盖率报告（v8）
 ```
-
-## 故障排除
-
-```bash
-# 验证编译
-npm run check
-
-# 验证服务端启动
-timeout 2 node dist/index.js
-# 预期输出：mcp-server-wslc v1.0.0 started (stdio)
-
-# 验证 wslc 可用
-which wslc && wslc version
-
-# 手动工具测试
-node -e "
-import('@modelcontextprotocol/sdk/server/mcp.js').then(() => console.log('SDK OK'));
-"
-```
-
+---
 ## 许可证
 
 ISC

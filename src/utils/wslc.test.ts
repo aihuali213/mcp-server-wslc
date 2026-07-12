@@ -1,15 +1,25 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // vi.mock is hoisted — use vi.hoisted() so mockExecFile is initialized in time
-const { mockExecFile } = vi.hoisted(() => ({
-  mockExecFile: vi.fn(),
-}));
+const { mockExecFile, isWindows } = vi.hoisted(() => {
+  // Simulate platform before the module under test evaluates process.platform
+  const _isWindows = process.platform === "win32";
+  return {
+    mockExecFile: vi.fn(),
+    isWindows: _isWindows,
+  };
+});
 
 vi.mock("node:child_process", () => ({
   execFile: mockExecFile,
 }));
 
 import { runWslc } from "./wslc.js";
+
+const expectedBin = isWindows ? "wslc" : "wslc.exe";
+const expectedOptions = isWindows
+  ? { encoding: "utf-8", timeout: 30_000, windowsHide: true }
+  : { encoding: "utf-8", timeout: 30_000 };
 
 describe("runWslc", () => {
   beforeEach(() => {
@@ -24,11 +34,12 @@ describe("runWslc", () => {
     const result = await runWslc(["container", "list"]);
 
     expect(mockExecFile).toHaveBeenCalledOnce();
-    expect(mockExecFile).toHaveBeenCalledWith("wslc", ["container", "list"], {
-      encoding: "utf-8",
-      timeout: 30_000,
-      windowsHide: true,
-    }, expect.any(Function));
+    expect(mockExecFile).toHaveBeenCalledWith(
+      expectedBin,
+      ["container", "list"],
+      expectedOptions,
+      expect.any(Function),
+    );
 
     expect(result).toEqual({
       stdout: "output",
