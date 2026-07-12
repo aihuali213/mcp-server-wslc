@@ -4,6 +4,54 @@ import { runWslc } from "../../utils/wslc.js";
 
 const memoryPattern = /^\d+(\.\d+)?[MG]$/;
 
+/** Parameter shape for container_run — used by both the tool and tests. */
+export interface ContainerRunParams {
+  image: string;
+  name?: string;
+  command?: string;
+  commandArgs?: string[];
+  detach?: boolean;
+  cpus?: number;
+  memory?: string;
+  env?: Record<string, string>;
+  publish?: string[];
+  volume?: string[];
+  workdir?: string;
+  interactive?: boolean;
+  tty?: boolean;
+  rm?: boolean;
+}
+
+/** Build wslc CLI arguments from container_run params. Exported for testing. */
+export function buildContainerRunArgs(params: ContainerRunParams): string[] {
+  const args = ["container", "run"];
+  if (params.name) args.push("--name", params.name);
+  if (params.detach) args.push("--detach");
+  if (params.cpus !== undefined) args.push("--cpus", String(params.cpus));
+  if (params.memory) args.push("--memory", params.memory);
+  if (params.interactive) args.push("--interactive");
+  if (params.tty) args.push("--tty");
+  if (params.rm) args.push("--rm");
+  if (params.workdir) args.push("--workdir", params.workdir);
+  if (params.publish) {
+    for (const p of params.publish) args.push("--publish", p);
+  }
+  if (params.volume) {
+    for (const v of params.volume) args.push("--volume", v);
+  }
+  if (params.env) {
+    for (const [k, v] of Object.entries(params.env)) {
+      args.push("--env", `${k}=${v}`);
+    }
+  }
+  args.push(params.image);
+  if (params.command) {
+    args.push(params.command);
+    if (params.commandArgs) args.push(...params.commandArgs);
+  }
+  return args;
+}
+
 export function registerContainerRunTool(server: McpServer): void {
   server.registerTool(
     "container_run",
@@ -27,31 +75,7 @@ export function registerContainerRunTool(server: McpServer): void {
       },
     },
     async (params) => {
-      const args = ["container", "run"];
-      if (params.name) args.push("--name", params.name);
-      if (params.detach) args.push("--detach");
-      if (params.cpus) args.push("--cpus", String(params.cpus));
-      if (params.memory) args.push("--memory", params.memory);
-      if (params.interactive) args.push("--interactive");
-      if (params.tty) args.push("--tty");
-      if (params.rm) args.push("--rm");
-      if (params.workdir) args.push("--workdir", params.workdir);
-      if (params.publish) {
-        for (const p of params.publish) args.push("--publish", p);
-      }
-      if (params.volume) {
-        for (const v of params.volume) args.push("--volume", v);
-      }
-      if (params.env) {
-        for (const [k, v] of Object.entries(params.env)) {
-          args.push("--env", `${k}=${v}`);
-        }
-      }
-      args.push(params.image);
-      if (params.command) {
-        args.push(params.command);
-        if (params.commandArgs) args.push(...params.commandArgs);
-      }
+      const args = buildContainerRunArgs(params);
       const { stdout, stderr } = await runWslc(args);
       const text = stderr ? `stdout:\n${stdout}\n\nstderr:\n${stderr}` : stdout;
       return { content: [{ type: "text" as const, text }] };

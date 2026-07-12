@@ -93,10 +93,13 @@ Restart Claude Code, then try:
 ## Commands
 
 ```bash
-npm run dev       # tsx — run TypeScript directly
-npm run build     # tsc → dist/
-npm run check     # tsc --noEmit (type-check only)
-npm start         # node dist/index.js (production)
+npm run dev          # tsx — run TypeScript directly
+npm run build        # tsc → dist/
+npm run check        # tsc --noEmit (type-check only)
+npm run test         # vitest — run unit tests
+npm run test:watch   # vitest — watch mode
+npm run test:coverage # vitest — test coverage report
+npm start            # node dist/index.js (production)
 ```
 
 ---
@@ -199,8 +202,8 @@ mcp-server-wslc/
 │   ├── registry/
 │   │   └── registerTools.ts         # Central tool registration
 │   ├── tools/
-│   │   ├── containers/              # 11 files — Phase 1 + 2
-│   │   │   ├── list.ts, create.ts, run.ts, inspect.ts
+│   │   ├── containers/              # 11 files + 1 test — Phase 1 + 2
+│   │   │   ├── list.ts, create.ts, run.ts, run.test.ts, inspect.ts
 │   │   │   ├── start.ts, stop.ts, restart.ts, remove.ts
 │   │   │   └── logs.ts, exec.ts, stats.ts
 │   │   ├── images/                  # 7 files — Phase 1 + 3
@@ -215,8 +218,10 @@ mcp-server-wslc/
 │   │   └── system/                  # 2 files — Phase 7
 │   │       └── version.ts, prune.ts
 │   └── utils/
-│       └── wslc.ts                  # runWslc() — single execution point
+│       ├── wslc.ts                  # runWslc() — single execution point
+│       └── wslc.test.ts             # Unit tests for runWslc()
 ├── dist/                            # Compiled output (33 JS files)
+├── vitest.config.ts
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -233,6 +238,19 @@ mcp-server-wslc/
 - **Stdio transport** — maximum client compatibility
 
 ---
+
+## Testing
+
+Unit tests use [vitest](https://vitest.dev). Tests cover:
+
+- **`runWslc()`** — execution wrapper: stdout/stderr trimming, timeout, ENOENT, error propagation
+- **`buildContainerRunArgs()`** — CLI argument construction for `container_run`: all parameter types and combinations
+
+```bash
+npm run test           # Single run
+npm run test:watch     # Watch mode
+npm run test:coverage  # Coverage report (v8)
+```
 
 ## Troubleshooting
 
