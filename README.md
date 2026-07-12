@@ -106,14 +106,14 @@ npm start            # node dist/index.js (production)
 
 ## Available Tools
 
-### Phase 1 — Core (2 tools)
+### Core
 
 | Tool | Description | Parameters |
 |------|-------------|------------|
 | `list_containers` | List all WSL containers | `format` (table \| json) |
 | `list_images` | List all WSL container images | `format` (table \| json) |
 
-### Phase 2 — Container Management (10 tools)
+### Container Management
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -130,7 +130,7 @@ npm start            # node dist/index.js (production)
 
 > `container_restart` composes `stop` + `start` — wslc has no native restart command.
 
-### Phase 3 — Image Management (6 tools)
+### Image Management
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -141,7 +141,7 @@ npm start            # node dist/index.js (production)
 | `image_inspect` | Show image details | `image` |
 | `image_remove` | Remove an image | `image`, `force`, `noPrune` |
 
-### Phase 4 — Network Management (3 tools)
+### Network Management
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -149,7 +149,7 @@ npm start            # node dist/index.js (production)
 | `network_create` | Create a network | `name`, `driver`, `opt`, `label` |
 | `network_remove` | Remove a network | `name`, `force` |
 
-### Phase 5 — Volume Management (3 tools)
+### Volume Management
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -157,7 +157,7 @@ npm start            # node dist/index.js (production)
 | `volume_create` | Create a named volume | `name`, `driver`, `opt`, `label` |
 | `volume_remove` | Remove a volume | `name`, `force` |
 
-### Phase 6 — Registry Authentication (2 tools)
+### Registry Authentication
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -166,7 +166,7 @@ npm start            # node dist/index.js (production)
 
 > **Security:** Prefer `passwordStdin` over `password` to avoid exposing credentials in process lists.
 
-### Phase 7 — System (2 tools)
+### System
 
 | Tool | Description | Key Parameters |
 |------|-------------|----------------|
@@ -202,20 +202,20 @@ mcp-server-wslc/
 │   ├── registry/
 │   │   └── registerTools.ts         # Central tool registration
 │   ├── tools/
-│   │   ├── containers/              # 11 files + 1 test — Phase 1 + 2
+│   │   ├── containers/              # 11 files + 1 test
 │   │   │   ├── list.ts, create.ts, run.ts, run.test.ts, inspect.ts
 │   │   │   ├── start.ts, stop.ts, restart.ts, remove.ts
 │   │   │   └── logs.ts, exec.ts, stats.ts
-│   │   ├── images/                  # 7 files — Phase 1 + 3
+│   │   ├── images/                  # 7 files
 │   │   │   ├── list.ts, pull.ts, push.ts, build.ts
 │   │   │   └── tag.ts, inspect.ts, remove.ts
-│   │   ├── networks/                # 3 files — Phase 4
+│   │   ├── networks/                # 3 files
 │   │   │   └── list.ts, create.ts, remove.ts
-│   │   ├── volumes/                 # 3 files — Phase 5
+│   │   ├── volumes/                 # 3 files
 │   │   │   └── list.ts, create.ts, remove.ts
-│   │   ├── registry/                # 2 files — Phase 6
+│   │   ├── registry/                # 2 files
 │   │   │   └── login.ts, logout.ts
-│   │   └── system/                  # 2 files — Phase 7
+│   │   └── system/                  # 2 files
 │   │       └── version.ts, prune.ts
 │   └── utils/
 │       ├── wslc.ts                  # runWslc() — single execution point
@@ -224,7 +224,8 @@ mcp-server-wslc/
 ├── vitest.config.ts
 ├── package.json
 ├── tsconfig.json
-└── README.md
+├── README.md
+└── README.zh-CN.md
 ```
 
 ---
