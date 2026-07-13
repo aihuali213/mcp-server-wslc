@@ -14,79 +14,26 @@ Claude Code · Codex CLI · Hermes · OpenClaw · Cursor · VS Code Agent
 
 ## 快速开始
 
-```bash
-npm install -g mcp-server-wslc
-```
-
-或通过 npx 直接运行：
-
-```bash
-npx mcp-server-wslc
-```
-
-**要求：** Node.js >= 22，`wslc` 在 PATH 中可用。
-
----
-
-## 客户端配置
-
-### Claude Code
+将以下配置添加到 MCP 客户端的配置文件中：
 
 ```json
 {
   "mcpServers": {
     "wslc": {
       "command": "npx",
-      "args": ["mcp-server-wslc"]
+      "args": ["-y", "mcp-server-wslc"]
     }
   }
 }
 ```
 
-重启 Claude Code，然后尝试：
+重启客户端，然后尝试：
 
 > 列出所有 WSL 容器。
 > 拉取 alpine:latest。
 > 从 ubuntu:24.04 创建一个名为 "web-test" 的容器，内存限制 512M。
 
-### Codex CLI
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
-
-### Cursor / VS Code Agent
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
-
-### Hermes / OpenClaw
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
+**要求：** Node.js >= 22，`wslc` 在 PATH 中可用。
 
 ---
 

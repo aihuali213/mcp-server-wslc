@@ -14,79 +14,26 @@ Claude Code · Codex CLI · Hermes · OpenClaw · Cursor · VS Code Agent
 
 ## Quick Start
 
-```bash
-npm install -g mcp-server-wslc
-```
-
-Or run directly with npx:
-
-```bash
-npx mcp-server-wslc
-```
-
-**Requirements:** Node.js >= 22, `wslc` on PATH.
-
----
-
-## Client Configuration
-
-### Claude Code
+Add to your MCP client's configuration file:
 
 ```json
 {
   "mcpServers": {
     "wslc": {
       "command": "npx",
-      "args": ["mcp-server-wslc"]
+      "args": ["-y", "mcp-server-wslc"]
     }
   }
 }
 ```
 
-Restart Claude Code, then try:
+Restart the client, then try:
 
 > List all WSL containers.
 > Pull alpine:latest.
 > Create a container named "web-test" from ubuntu:24.04 with 512M memory.
 
-### Codex CLI
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
-
-### Cursor / VS Code Agent
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
-
-### Hermes / OpenClaw
-
-```json
-{
-  "mcpServers": {
-    "wslc": {
-      "command": "npx",
-      "args": ["mcp-server-wslc"]
-    }
-  }
-}
-```
+**Requirements:** Node.js >= 22, `wslc` on PATH.
 
 ---
 

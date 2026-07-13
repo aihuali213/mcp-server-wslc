@@ -3,7 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { registerAllTools } from "./registry/registerTools.js";
 
 const SERVER_NAME = "mcp-server-wslc";
-const SERVER_VERSION = "1.0.0";
+const SERVER_VERSION = "1.0.3";
 
 /**
  * Create and configure the MCP server instance.
